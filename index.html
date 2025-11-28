@@ -4,22 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPA Template JS Vanilla</title>
-    <link rel="stylesheet" href="assets/styles/main.css">
+    
+    <link rel="stylesheet" href="./assets/styles/main.css">
 </head>
 <body>
 
-    <!-- Header Fixo -->
     <header id="main-header">
         <button id="back-btn" onclick="goBack()">
-            &#8592; <!-- Seta para esquerda -->
-        </button>
+            &#8592; </button>
         <span id="header-title">Início</span>
     </header>
 
-    <!-- Container da Aplicação -->
     <div id="app-container">
 
-        <!-- TELA: INÍCIO -->
         <div id="home" class="page active">
             <h2>Selecione uma Opção</h2>
             <div class="btn-group">
@@ -31,7 +28,6 @@
             </div>
         </div>
 
-        <!-- TELA: RESULTADO -->
         <div id="resultado" class="page">
             <h2>Resultado Parcial</h2>
             <p>Você escolheu: <strong id="res-display"></strong></p>
@@ -44,7 +40,6 @@
             </div>
         </div>
 
-        <!-- TELA: SUBRESULTADO -->
         <div id="subresultado" class="page">
             <h2>Subresultado Final</h2>
             <p>Fluxo Completo:</p>
@@ -58,12 +53,10 @@
             </div>
         </div>
 
-        <!-- TELA: INÍCIO ALTERNATIVO 1 -->
         <div id="inicio-alt" class="page" style="background-color: #e9f7ef;">
-            <h2 style="color: #28a745;">Início Alternativo 1</h2>
+            <h2 style="color: #3da728;">Início Alternativo 1</h2>
             <p>Esta é uma entrada diferente para o App.</p>
             <div class="btn-group">
-                <!-- Exemplo de fluxo saindo do alternativo -->
                 <button class="action-btn btn-alt" onclick="goTo('resultado', { sel1: 'Alternativo' })">Começar fluxo daqui</button>
                 <div style="height: 20px;"></div>
                 <button class="action-btn btn-primary" onclick="goTo('home', {}, 'dissolve')">Voltar ao Início Padrão</button>
@@ -72,6 +65,6 @@
 
     </div>
 
-<script src="assets/scripts/ui.js"></script>
+    <script type="module" src="./assets/scripts/main.js"></script>
 </body>
 </html>
