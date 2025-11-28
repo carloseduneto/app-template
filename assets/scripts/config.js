@@ -3,6 +3,9 @@
  */
 export const routes = ["home", "resultado", "subresultado", "inicio-alt"];
 
+export const mainColor = "#007bff";
+
+
 /**
  * Hierarquia das páginas para determinar a direção da animação no botão voltar do navegador.
  * Nível menor -> Nível maior = Progressivo

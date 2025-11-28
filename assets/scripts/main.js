@@ -117,18 +117,27 @@ window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const startPage = params.get("page") || "home";
 
-  fillData(startPage);
+  // Limpa qualquer estado quebrado antes de iniciar
+  document.querySelectorAll(".page").forEach((p) => {
+    p.classList.remove("active", "animating");
+  });
 
   const pageEl = document.getElementById(startPage);
+
   if (pageEl) {
+    // Preenche dados antes de ativar
+    fillData(startPage);
+
     pageEl.classList.add("active");
     updateHeader(startPage);
   } else {
     // Fallback se a página na URL não existir
+    fillData("home");
     document.getElementById("home").classList.add("active");
     updateHeader("home");
   }
 });
+
 
 // --- EXPOR PARA O HTML ---
 // Como estamos num módulo, goTo e goBack não são globais por padrão.

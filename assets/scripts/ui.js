@@ -1,3 +1,5 @@
+import {mainColor} from "./config.js";
+
 /**
  * Atualiza o texto do Header e visibilidade do botão voltar.
  * @param {string} pageId
@@ -8,7 +10,9 @@ export function updateHeader(pageId) {
   const header = document.getElementById("main-header");
 
   // Resetar cor do header
-  header.style.backgroundColor = "#007bff";
+
+  // header.style.backgroundColor = "#007bff";
+  header.style.backgroundColor = mainColor;
 
   if (pageId === "home") {
     titleEl.textContent = "Início";

@@ -11,7 +11,7 @@
 
     <header id="main-header">
         <button id="back-btn" onclick="goBack()">
-            &#8592; </button>
+            &#8617; </button>
         <span id="header-title">Início</span>
     </header>
 
@@ -23,6 +23,7 @@
                 <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'A' })">Opção A</button>
                 <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'B' })">Opção B</button>
                 <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'C' })">Opção C</button>
+
                 <div style="height: 20px;"></div>
                 <button class="action-btn btn-alt" onclick="goTo('inicio-alt', {}, 'dissolve')">Ir para Início Alternativo 1</button>
             </div>
@@ -36,6 +37,7 @@
                 <button class="action-btn btn-secondary" onclick="goTo('subresultado', { sel2: '2' })">Sub-opção 2</button>
                 <button class="action-btn btn-secondary" onclick="goTo('subresultado', { sel2: '3' })">Sub-opção 3</button>
                 <div style="height: 20px;"></div>
+                <button class="action-btn btn-primary" onclick="goTo('nao-resultado', { sel1: 'C' })">Opção inexistente</button>
                 <button class="action-btn btn-alt" onclick="goTo('inicio-alt', {}, 'dissolve')">Ir para Início Alternativo 1</button>
             </div>
         </div>
@@ -62,6 +64,7 @@
                 <button class="action-btn btn-primary" onclick="goTo('home', {}, 'dissolve')">Voltar ao Início Padrão</button>
             </div>
         </div>
+
 
     </div>
 
