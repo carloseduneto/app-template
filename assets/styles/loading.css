@@ -1,0 +1,30 @@
+#subresultado-loading, #resultado-loading{
+	background: linear-gradient(
+		90deg,
+	    #7e7e7e 30%,
+		#DCDCDC 50%,
+		#7e7e7e 70%
+	);
+	background-size: 400%;
+	animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+	0% {
+		background-position: 100% 100%;
+	}
+	100% {
+		background-position: 0 0;
+	}
+}
+
+/* --- BLOQUEIO DE UI --- */
+/* Esta classe será adicionada ao body durante a animação */
+body.is-navigating {
+    pointer-events: none; /* NENHUM clique funciona na página inteira */
+    cursor: wait;         /* (Opcional) Mostra cursor de espera */
+}
+
+/* Opcional: Se quiser que o botão de voltar do header ainda funcione, 
+   você pode reabilitar eventos apenas nele, mas geralmente 
+   é melhor bloquear tudo mesmo. */

@@ -14,4 +14,39 @@ export function fillData(pageId) {
     document.getElementById("final-display-1").textContent = sel1;
     document.getElementById("final-display-2").textContent = sel2;
   }
+
+  /**
+
+  if (pageId === "subresultado") {
+    const loading = document.getElementById("subresultado-loading");
+    const content = document.getElementById("subresultado-content");
+
+    // Mostrar skeleton
+    loading.style.display = "block";
+    content.style.display = "none";
+
+    // Espera 0.5s e exibe os dados reais
+    setTimeout(() => {
+      loading.style.display = "none";
+      content.style.display = "block";
+    }, 300);
+  }
+  
+  if (pageId === "resultado") {
+    const loading = document.getElementById("resultado-loading");
+    const content = document.getElementById("resultado-content");
+
+    // Mostrar skeleton
+    loading.style.display = "block";
+    content.style.display = "none";
+
+    // Espera 0.5s e exibe os dados reais
+    setTimeout(() => {
+      loading.style.display = "none";
+      content.style.display = "block";
+    }, 300);
+  }
+
+     
+   */
 }

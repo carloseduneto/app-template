@@ -7,6 +7,9 @@ import {
   cleanTargetAnimationClasses,
 } from "./ui.js";
 
+// Variável de controle (segurança extra para chamadas via código)
+let isAnimating = false;
+
 // --- FUNÇÕES DE NAVEGAÇÃO ---
 
 /**
@@ -16,6 +19,9 @@ import {
  * @param {string} animType
  */
 function goTo(pageId, params = {}, animType = "progressive") {
+  // 1. Bloqueio Lógico: Se já estiver animando, ignora o comando
+  if (isAnimating) return;
+
   const urlParams = new URLSearchParams(window.location.search);
 
   // Limpar params se voltarmos para o início
@@ -43,11 +49,13 @@ function goTo(pageId, params = {}, animType = "progressive") {
  * Função de voltar acionada pelo Header
  */
 function goBack() {
+  // O navegador gerencia o histórico, mas se quisermos evitar spam no botão voltar:
+  if (isAnimating) return;
   window.history.back();
 }
 
 /**
- * Atualiza o DOM (telas, header, animações).
+ * Atualiza o DOM e gerencia o bloqueio de UI
  */
 function render(targetPageId, animType = "none") {
   const activePage = document.querySelector(".page.active");
@@ -64,33 +72,59 @@ function render(targetPageId, animType = "none") {
     return;
   }
 
+  // --- INÍCIO DO BLOQUEIO ---
+  isAnimating = true;
+  document.body.classList.add("is-navigating"); // Bloqueia cliques via CSS
+
   fillData(targetPageId);
 
-  // Se type for none (fallback)
+  // Se não houver animação, removemos o bloqueio imediatamente
   if (animType === "none") {
     activePage.classList.remove("active", "animating");
     targetPage.classList.add("active");
     targetPage.classList.remove("animating");
+
+    // Libera
+    isAnimating = false;
+    document.body.classList.remove("is-navigating");
     return;
   }
 
   // Executa lógica de animação (UI)
   applyAnimationClasses(activePage, targetPage, animType);
 
-  // Limpeza após o fim da animação
-  targetPage.addEventListener(
-    "animationend",
-    () => {
-      cleanAnimationClasses(activePage);
-      cleanTargetAnimationClasses(targetPage);
-    },
-    { once: true }
-  );
+  // Função única para limpar tudo ao final
+  const onAnimationEnd = () => {
+    cleanAnimationClasses(activePage);
+    cleanTargetAnimationClasses(targetPage);
+
+    // --- FIM DO BLOQUEIO ---
+    isAnimating = false;
+    document.body.classList.remove("is-navigating"); // Libera cliques
+  };
+
+  // Adiciona o listener com { once: true } para garantir que rode só uma vez
+  targetPage.addEventListener("animationend", onAnimationEnd, { once: true });
+
+  // SAFETY NET (Rede de Segurança):
+  // Às vezes o navegador não dispara 'animationend' (aba inativa, erro de render).
+  // Isso força o desbloqueio após o tempo da animação + uma pequena folga (ex: 600ms).
+  setTimeout(() => {
+    if (isAnimating) {
+      console.warn("AnimationEnd falhou, forçando limpeza.");
+      onAnimationEnd();
+    }
+  }, 600); // 500ms da animação + 100ms de folga
 }
 
-// --- EVENTOS DO NAVEGADOR ---
+// --- EVENTOS E INICIALIZAÇÃO (Mantém igual) ---
 
 window.addEventListener("popstate", (event) => {
+  // Se estiver animando e o usuário apertar voltar no browser,
+  // o URL muda, mas podemos tentar mitigar problemas visuais.
+  // Idealmente, o bloqueio 'is-navigating' impede cliques na UI,
+  // mas botões do navegador estão fora do nosso controle.
+
   const params = new URLSearchParams(window.location.search);
   const targetPage = params.get("page") || "home";
 
@@ -102,7 +136,7 @@ window.addEventListener("popstate", (event) => {
   const targetLevel =
     hierarchy[targetPage] !== undefined ? hierarchy[targetPage] : 0;
 
-  let anim = "regressive"; // Padrão
+  let anim = "regressive";
 
   if (currentLevel === 0 && targetLevel === 0 && currentId !== targetPage) {
     anim = "dissolve";
@@ -116,12 +150,7 @@ window.addEventListener("popstate", (event) => {
 window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const startPage = params.get("page") || "home";
-
-  // Limpa qualquer estado quebrado antes de iniciar
-  document.querySelectorAll(".page").forEach((p) => {
-    p.classList.remove("active", "animating");
-  });
-
+  fillData(startPage);
   const pageEl = document.getElementById(startPage);
 
   if (pageEl) {
