@@ -1,0 +1,236 @@
+/* --- RESET E ESTILOS GERAIS --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f0f2f5;
+  overflow-x: hidden; /* Impede rolagem horizontal durante animações */
+  height: 100vh;
+  width: 100vw;
+}
+
+/* --- CABEÇALHO FIXO --- */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+#back-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 16px;
+  display: none; /* Escondido por padrão */
+}
+
+#back-btn:hover {
+  opacity: 0.8;
+}
+
+#header-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* --- CONTAINER DAS PÁGINAS --- */
+#app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-top: 60px; /* Espaço para o header */
+}
+
+/* --- ESTRUTURA DAS TELAS (PAGES) --- */
+.page {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background-color: #f0f2f5;
+  display: none; /* Escondido por padrão */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  /* Configuração para animação suave */
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.page.active {
+  display: flex;
+  z-index: 1;
+}
+
+/* --- ESTILOS DE CONTEÚDO --- */
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+p {
+  margin-bottom: 30px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+button.action-btn {
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.1s, background-color 0.2s;
+  background-color: white;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button.action-btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: #007bff !important;
+  color: white !important;
+}
+.btn-secondary {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+.btn-alt {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+/* --- DEFINIÇÃO DAS ANIMAÇÕES --- */
+
+/* Classe utilitária para duração */
+.animating {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); /* Ease Out Quart */
+}
+
+/* Keyframes Genéricos de Movimento */
+
+/* Mover para Esquerda */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+/* Mover para Direita */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* 3. DISSOLVE (Entre inícios) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Classes aplicadas via JS - LÓGICA DE NAVEGAÇÃO */
+
+/* Progressiva (Avançar): Padrão Mobile (Entra da direita) */
+.anim-progress-enter {
+  animation-name: slideInRight;
+  z-index: 10;
+}
+.anim-progress-exit {
+  animation-name: slideOutLeft;
+  z-index: 9;
+}
+
+/* Regressiva (Voltar): Padrão Mobile (Volta da esquerda) */
+.anim-regress-enter {
+  animation-name: slideInLeft;
+  z-index: 10;
+}
+.anim-regress-exit {
+  animation-name: slideOutRight;
+  z-index: 9;
+}
+
+/* Dissolve (Troca de Contexto) */
+.anim-dissolve-enter {
+  animation-name: fadeIn;
+  z-index: 10;
+}
+.anim-dissolve-exit {
+  animation-name: fadeOut;
+  z-index: 9;
+}

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Template JS Vanilla</title>
+    <link rel="stylesheet" href="assets/styles/main.css">
+</head>
+<body>
+
+    <!-- Header Fixo -->
+    <header id="main-header">
+        <button id="back-btn" onclick="goBack()">
+            &#8592; <!-- Seta para esquerda -->
+        </button>
+        <span id="header-title">Início</span>
+    </header>
+
+    <!-- Container da Aplicação -->
+    <div id="app-container">
+
+        <!-- TELA: INÍCIO -->
+        <div id="home" class="page active">
+            <h2>Selecione uma Opção</h2>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'A' })">Opção A</button>
+                <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'B' })">Opção B</button>
+                <button class="action-btn btn-primary" onclick="goTo('resultado', { sel1: 'C' })">Opção C</button>
+                <div style="height: 20px;"></div>
+                <button class="action-btn btn-alt" onclick="goTo('inicio-alt', {}, 'dissolve')">Ir para Início Alternativo 1</button>
+            </div>
+        </div>
+
+        <!-- TELA: RESULTADO -->
+        <div id="resultado" class="page">
+            <h2>Resultado Parcial</h2>
+            <p>Você escolheu: <strong id="res-display"></strong></p>
+            <div class="btn-group">
+                <button class="action-btn btn-secondary" onclick="goTo('subresultado', { sel2: '1' })">Sub-opção 1</button>
+                <button class="action-btn btn-secondary" onclick="goTo('subresultado', { sel2: '2' })">Sub-opção 2</button>
+                <button class="action-btn btn-secondary" onclick="goTo('subresultado', { sel2: '3' })">Sub-opção 3</button>
+                <div style="height: 20px;"></div>
+                <button class="action-btn btn-alt" onclick="goTo('inicio-alt', {}, 'dissolve')">Ir para Início Alternativo 1</button>
+            </div>
+        </div>
+
+        <!-- TELA: SUBRESULTADO -->
+        <div id="subresultado" class="page">
+            <h2>Subresultado Final</h2>
+            <p>Fluxo Completo:</p>
+            <div style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; text-align: center;">
+                <span style="font-size: 2rem; color: #007bff;" id="final-display-1"></span>
+                <span style="font-size: 2rem; color: #ccc;"> &rarr; </span>
+                <span style="font-size: 2rem; color: #6c757d;" id="final-display-2"></span>
+            </div>
+            <div class="btn-group">
+                <button class="action-btn btn-primary" onclick="goTo('home', {}, 'regressive')">Voltar ao Início</button>
+            </div>
+        </div>
+
+        <!-- TELA: INÍCIO ALTERNATIVO 1 -->
+        <div id="inicio-alt" class="page" style="background-color: #e9f7ef;">
+            <h2 style="color: #28a745;">Início Alternativo 1</h2>
+            <p>Esta é uma entrada diferente para o App.</p>
+            <div class="btn-group">
+                <!-- Exemplo de fluxo saindo do alternativo -->
+                <button class="action-btn btn-alt" onclick="goTo('resultado', { sel1: 'Alternativo' })">Começar fluxo daqui</button>
+                <div style="height: 20px;"></div>
+                <button class="action-btn btn-primary" onclick="goTo('home', {}, 'dissolve')">Voltar ao Início Padrão</button>
+            </div>
+        </div>
+
+    </div>
+
+<script src="assets/scripts/ui.js"></script>
+</body>
+</html>
